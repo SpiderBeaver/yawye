@@ -1,56 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import './App.css';
+import AddServingForm from './features/diet/AddServingForm';
+import DailyDiet from './features/diet/DailyDiet';
+import { servingAdded } from './features/diet/dietSlice';
 
 function App() {
+  const [showAddServingForm, setShowAddServingForm] = useState(false);
+  const dispatch = useDispatch();
+
+  const date = new Date(2021, 3, 15);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
+      <DailyDiet
+        date={date}
+        onAddServingButtonClick={() => {
+          setShowAddServingForm(true);
+        }}
+      />
+      <AddServingForm
+        show={showAddServingForm}
+        onBack={() => setShowAddServingForm(false)}
+        onAddDish={(id, weight) => {
+          dispatch(servingAdded({ date: date.getTime(), dishId: id, sizeGrams: weight }));
+          setShowAddServingForm(false);
+        }}
+      />
     </div>
   );
 }
