@@ -1,12 +1,12 @@
 import { Dayjs } from 'dayjs';
-import { Course } from '../entities/Course';
+import { Serving } from '../entities/Serving';
 
 export default {
-  getCourses(date: Dayjs): Course[] {
+  getCourses(date: Dayjs): Serving[] {
     // TODO: Fetch from DB
     return [
-      { id: 1, name: 'Pizza' },
-      { id: 2, name: 'Soup' },
+      { id: 1, dish: null, weight: 100 },
+      { id: 2, dish: null, weight: 150 },
     ];
   },
 };
