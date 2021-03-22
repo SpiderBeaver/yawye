@@ -1,9 +1,8 @@
 import express from 'express';
+import router from './routes';
 
 const app = express();
 
-app.get('/', (req, res) => {
-  res.send('Hi');
-});
+app.use(router);
 
 app.listen(3000, () => console.log('YAWYE server started. Listening on port 3000.'));
