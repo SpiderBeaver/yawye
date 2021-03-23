@@ -26,7 +26,7 @@ const initialState: DishesState = {
 
 export const fetchDishes = createAsyncThunk('/dishes/fetchDishes', async () => {
   // TODO: Move into API module
-  const response = await fetch('http://localhost:3001/dishes');
+  const response = await fetch('http://192.168.1.7:3001/dishes');
   // TODO: Check status
   const dishes = await response.json();
   return dishes;

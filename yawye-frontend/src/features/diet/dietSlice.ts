@@ -27,7 +27,7 @@ const initialState: DietState = {
 export const changeDate = createAsyncThunk('/diet/changeDate', async ({ newDate }: { newDate: Dayjs }) => {
   // TODO Extract to a separate module for API client.
   const newDateString = newDate.format('YYYY-MM-DD');
-  const response = await fetch(`http://localhost:3001/diet/${newDateString}`);
+  const response = await fetch(`http://192.168.1.7:3001/diet/${newDateString}`);
   const servings = await response.json();
   return {
     newDate: newDate.unix(),
