@@ -8,6 +8,7 @@ export interface Ingredient {
   sizeGrams: number;
 }
 
+// TODO: Sync this interface and the API data
 export interface Dish {
   id: number;
   name: string;
