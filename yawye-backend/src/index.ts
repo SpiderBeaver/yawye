@@ -1,13 +1,14 @@
 import 'reflect-metadata';
 
 import express from 'express';
+import cors from 'cors';
 import path from 'path';
 import router from './routes';
 import { createConnection } from 'typeorm';
-import { Ingredient } from './entities/Ingredient';
 
 async function main() {
   const app = express();
+  app.use(cors());
 
   const entitiesPath = path.join(__dirname, 'entities', '**', '*.js');
 
@@ -25,7 +26,7 @@ async function main() {
 
   app.use(router);
 
-  app.listen(3000, () => console.log('YAWYE server started. Listening on port 3000.'));
+  app.listen(3001, () => console.log('YAWYE server started. Listening on port 3001.'));
 }
 
 main();

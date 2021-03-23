@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 
 export interface Ingredient {
@@ -20,32 +20,26 @@ export interface DishesState {
 }
 
 const initialState: DishesState = {
-  dishes: [
-    {
-      id: 1,
-      name: 'Pizza',
-      numberOfPortions: 4,
-      ingredients: [
-        { id: 1, name: 'Test', caloriesPerHundredGrams: 220, sizeGrams: 150 },
-        { id: 2, name: 'Test2', caloriesPerHundredGrams: 120, sizeGrams: 200 },
-      ],
-    },
-    {
-      id: 2,
-      name: 'Soup',
-      numberOfPortions: 2,
-      ingredients: [
-        { id: 1, name: 'Test', caloriesPerHundredGrams: 220, sizeGrams: 150 },
-        { id: 2, name: 'Test2', caloriesPerHundredGrams: 120, sizeGrams: 200 },
-      ],
-    },
-  ],
+  dishes: [],
 };
+
+export const fetchDishes = createAsyncThunk('/dishes/fetchDishes', async () => {
+  // TODO: Move into API module
+  const response = await fetch('http://localhost:3001/dishes');
+  // TODO: Check status
+  const dishes = await response.json();
+  return dishes;
+});
 
 export const dishesSlice = createSlice({
   name: 'dishes',
   initialState: initialState,
   reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchDishes.fulfilled, (state, action: PayloadAction<Dish[]>) => {
+      state.dishes = action.payload;
+    });
+  },
 });
 
 export const selectAllDishes = (state: RootState) => state.dishes.dishes;
