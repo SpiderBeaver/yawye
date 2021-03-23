@@ -5,14 +5,14 @@ export interface Ingredient {
   id: number;
   name: string;
   caloriesPerHundredGrams: number;
-  sizeGrams: number;
+  weight: number;
 }
 
 // TODO: Sync this interface and the API data
 export interface Dish {
   id: number;
   name: string;
-  numberOfPortions: number;
+  numberOfServings: number;
   ingredients: Ingredient[];
 }
 

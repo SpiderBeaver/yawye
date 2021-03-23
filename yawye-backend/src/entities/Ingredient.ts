@@ -1,5 +1,5 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Dish } from './Dish';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { DishIngredient } from './DishIngredient';
 
 @Entity()
 export class Ingredient {
@@ -12,6 +12,6 @@ export class Ingredient {
   @Column()
   calories: number = 0;
 
-  @ManyToMany(() => Dish, (dish) => dish.ingredients)
-  dishes: Dish[] | null = null;
+  @OneToMany(() => DishIngredient, (dishIngredient) => dishIngredient.ingredient)
+  dishes: DishIngredient[] | null = null;
 }

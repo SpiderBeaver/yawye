@@ -10,8 +10,9 @@ interface AddServingFormProps {
 }
 
 function dishServingWeight(dish: Dish) {
-  const totalWeight = dish.ingredients.map((i) => i.sizeGrams).reduce((a, b) => a + b);
-  const servingWeight = totalWeight / dish.numberOfPortions;
+  console.log(dish);
+  const totalWeight = dish.ingredients.map((i) => i.weight).reduce((a, b) => a + b);
+  const servingWeight = totalWeight / dish.numberOfServings;
   return servingWeight;
 }
 
