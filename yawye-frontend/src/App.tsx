@@ -1,11 +1,11 @@
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import './App.css';
 import DateHeader from './common/components/DateHeader';
 import AddServingForm from './features/diet/AddServingForm';
 import DailyDiet from './features/diet/DailyDiet';
-import { servingAdded } from './features/diet/dietSlice';
+import { changeDate, servingAdded } from './features/diet/dietSlice';
 import { fetchDishes } from './features/dishes/dishesSlice';
 
 function App() {
@@ -18,14 +18,14 @@ function App() {
     dispatch(fetchDishes());
   }, [dispatch]);
 
+  const handleDateChange = (newDate: Dayjs) => {
+    dispatch(changeDate({ newDate: newDate }));
+    setDate(newDate);
+  };
+
   return (
     <div className="App">
-      <DateHeader
-        date={date}
-        onDateChange={(newDate) => {
-          setDate(newDate);
-        }}
-      />
+      <DateHeader date={date} onDateChange={handleDateChange} />
       <DailyDiet
         date={date}
         onAddServingButtonClick={() => {
@@ -36,7 +36,7 @@ function App() {
         show={showAddServingForm}
         onBack={() => setShowAddServingForm(false)}
         onAddDish={(id, weight) => {
-          dispatch(servingAdded({ date: date.unix(), dishId: id, sizeGrams: weight }));
+          dispatch(servingAdded({ dishId: id, sizeGrams: weight }));
           setShowAddServingForm(false);
         }}
       />
