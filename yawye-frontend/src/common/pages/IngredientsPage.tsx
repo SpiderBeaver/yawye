@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import IngredientsList from '../../features/ingredients/IngredientsList';
 import { createIngredient } from '../../features/ingredients/ingredientsSlice';
 import NewIngredientForm from '../../features/ingredients/NewIngredientForm';
+import SlideIn from '../components/SlideIn';
 
 export default function IngredientsPage() {
   const dispatch = useDispatch();
@@ -19,11 +20,12 @@ export default function IngredientsPage() {
       <h2>Ingredients</h2>
       <IngredientsList></IngredientsList>
       <button onClick={() => setShowNewIngredientForm(true)}>New Ingredient</button>
-      <NewIngredientForm
-        show={showNewIngredientForm}
-        onBack={() => setShowNewIngredientForm(false)}
-        onCreate={handleCreateIngredient}
-      ></NewIngredientForm>
+      <SlideIn show={showNewIngredientForm}>
+        <NewIngredientForm
+          onBack={() => setShowNewIngredientForm(false)}
+          onCreate={handleCreateIngredient}
+        ></NewIngredientForm>
+      </SlideIn>
     </section>
   );
 }

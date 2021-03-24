@@ -6,6 +6,7 @@ import DailyDiet from '../../features/diet/DailyDiet';
 import { addServing, changeDate } from '../../features/diet/dietSlice';
 import { fetchDishes } from '../../features/dishes/dishesSlice';
 import DateHeader from '../components/DateHeader';
+import SlideIn from '../components/SlideIn';
 
 export default function DietPage() {
   const dispatch = useDispatch();
@@ -41,11 +42,9 @@ export default function DietPage() {
             setShowAddServingForm(true);
           }}
         />
-        <AddServingForm
-          show={showAddServingForm}
-          onBack={() => setShowAddServingForm(false)}
-          onAddDish={handleAddServing}
-        />
+        <SlideIn show={showAddServingForm}>
+          <AddServingForm onBack={() => setShowAddServingForm(false)} onAddDish={handleAddServing} />
+        </SlideIn>
       </div>
     </div>
   );

@@ -4,7 +4,6 @@ import { Dish, selectAllDishes } from '../dishes/dishesSlice';
 import styles from './AddServingForm.module.css';
 
 interface AddServingFormProps {
-  show: boolean;
   onBack?: () => void;
   onAddDish?: (id: number, weight: number) => void;
 }
@@ -16,12 +15,12 @@ function dishServingWeight(dish: Dish) {
   return servingWeight;
 }
 
-export default function AddServingForm({ show, onBack, onAddDish }: AddServingFormProps) {
+export default function AddServingForm({ onBack, onAddDish }: AddServingFormProps) {
   const dishes = useSelector(selectAllDishes);
 
   return (
-    <div className={`${styles.servingForm} ${show ? styles.onScreen : ''}`}>
-      <h2>Add Serving Form</h2>
+    <div className={styles.servingForm}>
+      <h2 className={styles.heading}>Add Serving Form</h2>
       <button onClick={onBack}>back</button>
       <ul className={styles.dishesList}>
         {dishes.map((dish) => (

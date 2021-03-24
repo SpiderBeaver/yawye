@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import styles from './NewIngredientForm.module.css';
 
 interface NewIngredientFormProps {
-  show: boolean;
   onBack?: () => void;
   onCreate?: (name: string, calories: number) => void;
 }
 
-export default function NewIngredientForm({ show, onBack, onCreate }: NewIngredientFormProps) {
+export default function NewIngredientForm({ onBack, onCreate }: NewIngredientFormProps) {
   const [name, setName] = useState('');
   const [calories, setCalories] = useState(0);
 
@@ -17,7 +16,7 @@ export default function NewIngredientForm({ show, onBack, onCreate }: NewIngredi
   };
 
   return (
-    <div className={`${styles.form} ${show ? styles.onScreen : ''}`}>
+    <div className={styles.form}>
       <button onClick={onBack}>back</button>
       <form onSubmit={handleSubmit}>
         <input type="text" value={name} onChange={(e) => setName(e.target.value)}></input>
