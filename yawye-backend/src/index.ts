@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 
 import express from 'express';
+import bodyParser from 'body-parser';
 import cors from 'cors';
 import path from 'path';
 import router from './routes';
@@ -9,6 +10,7 @@ import { createConnection } from 'typeorm';
 async function main() {
   const app = express();
   app.use(cors());
+  app.use(bodyParser.json());
 
   const entitiesPath = path.join(__dirname, 'entities', '**', '*.js');
 

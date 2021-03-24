@@ -6,6 +6,7 @@ import ingreientsController from './controllers/ingreientsController';
 const router = express.Router();
 
 router.get('/diet/:date', dietController.getDiet);
+router.post('/diet/addServing', dietController.addServing);
 router.get('/dishes', dishesController.getDishes);
 router.get('/ingredients', ingreientsController.getIngredients);
 

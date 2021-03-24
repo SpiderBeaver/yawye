@@ -16,11 +16,8 @@ interface DietState {
 
 const initialState: DietState = {
   dailyDiet: {
-    date: dayjs('2021-03-21').unix(),
-    servings: [
-      { dishId: 1, weight: 150 },
-      { dishId: 2, weight: 250 },
-    ],
+    date: dayjs().unix(),
+    servings: [],
   },
 };
 
@@ -35,6 +32,26 @@ export const changeDate = createAsyncThunk('/diet/changeDate', async ({ newDate 
   };
 });
 
+export const addServing = createAsyncThunk(
+  '/dist/addServing',
+  async ({ date, dishId, weight }: { date: Dayjs; dishId: number; weight: number }) => {
+    const body = {
+      date,
+      dishId,
+      weight: Math.trunc(weight),
+    };
+    const response = await fetch('http://localhost:3001/diet/addServing', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+    const serving = await response.json();
+    return serving;
+  }
+);
+
 export const dietSlice = createSlice({
   name: 'diet',
   initialState: initialState,
@@ -47,6 +64,9 @@ export const dietSlice = createSlice({
     builder.addCase(changeDate.fulfilled, (state, action: PayloadAction<{ newDate: number; servings: Serving[] }>) => {
       state.dailyDiet.date = action.payload.newDate;
       state.dailyDiet.servings = action.payload.servings;
+    });
+    builder.addCase(addServing.fulfilled, (state, action: PayloadAction<Serving>) => {
+      state.dailyDiet.servings.push({ dishId: action.payload.dishId, weight: action.payload.weight });
     });
   },
 });

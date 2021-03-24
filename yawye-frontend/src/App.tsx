@@ -5,7 +5,7 @@ import './App.css';
 import DateHeader from './common/components/DateHeader';
 import AddServingForm from './features/diet/AddServingForm';
 import DailyDiet from './features/diet/DailyDiet';
-import { changeDate, servingAdded } from './features/diet/dietSlice';
+import { addServing, changeDate, servingAdded } from './features/diet/dietSlice';
 import { fetchDishes } from './features/dishes/dishesSlice';
 
 function App() {
@@ -16,11 +16,20 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchDishes());
+    dispatch(changeDate({ newDate: dayjs() }));
   }, [dispatch]);
 
   const handleDateChange = (newDate: Dayjs) => {
     dispatch(changeDate({ newDate: newDate }));
     setDate(newDate);
+  };
+
+  const handleAddServing = (dishId: number, weight: number) => {
+    // Not sure if I want to save the exact time of the serving.
+    // For now just set the hour to 12.
+    const servingDate = date.set('hour', 12);
+    dispatch(addServing({ date: servingDate, dishId: dishId, weight: weight }));
+    setShowAddServingForm(false);
   };
 
   return (
@@ -35,10 +44,7 @@ function App() {
       <AddServingForm
         show={showAddServingForm}
         onBack={() => setShowAddServingForm(false)}
-        onAddDish={(id, weight) => {
-          dispatch(servingAdded({ dishId: id, sizeGrams: weight }));
-          setShowAddServingForm(false);
-        }}
+        onAddDish={handleAddServing}
       />
     </div>
   );
