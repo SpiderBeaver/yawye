@@ -7,6 +7,11 @@ interface IngredientDto {
   calories: number;
 }
 
+interface CreateIngredientParameters {
+  name: string;
+  calories: number;
+}
+
 export default {
   async getIngredients(req: Request, res: Response<IngredientDto[]>) {
     const ingredients = await IngredientsService.getIngredients();
@@ -19,5 +24,18 @@ export default {
         } as IngredientDto)
     );
     return res.json(ingredientsDto);
+  },
+
+  async addIngredient(req: Request, res: Response) {
+    // TODO: validate
+    // TODO: Check if exists
+    const parameters = req.body as CreateIngredientParameters;
+    const ingredient = await IngredientsService.addIngredient(parameters.name, parameters.calories);
+    const ingredientDto = {
+      id: ingredient.id,
+      name: ingredient.name,
+      calories: ingredient.calories,
+    } as IngredientDto;
+    return res.json(ingredientDto);
   },
 };
