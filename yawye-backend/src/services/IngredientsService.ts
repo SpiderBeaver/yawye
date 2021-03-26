@@ -14,4 +14,16 @@ export default {
     repository.save(ingredient);
     return ingredient;
   },
+
+  async updateIngredient(id: number, name: string, caloriees: number) {
+    const repository = getRepository(Ingredient);
+    const ingredient = await repository.findOne(id);
+    if (ingredient === undefined) {
+      throw new Error(`Ingredient with Id=${id} not found.`);
+    }
+    ingredient.name = name;
+    ingredient.calories = caloriees;
+    repository.save(ingredient);
+    return ingredient;
+  },
 };

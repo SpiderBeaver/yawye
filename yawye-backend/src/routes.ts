@@ -13,5 +13,6 @@ router.get('/dishes', dishesController.getDishes);
 router.get('/ingredients', ingreientsController.getIngredients);
 // TODO: Rename to 'create'?
 router.post('/ingredients/add', ingreientsController.addIngredient);
+router.post('/ingredients/update', ingreientsController.updateIngredient);
 
 export default router;

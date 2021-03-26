@@ -37,6 +37,22 @@ export const createIngredient = createAsyncThunk(
   }
 );
 
+export const updateIngredient = createAsyncThunk(
+  'ingredients/updateIngredient',
+  async ({ id, name, calories }: { id: number; name: string; calories: number }) => {
+    const body = { id, name, calories };
+    const response = await fetch('http://localhost:3001/ingredients/update', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+    const ingredient = (await response.json()) as Ingredient;
+    return ingredient;
+  }
+);
+
 export const ingredientsSlice = createSlice({
   name: 'ingredients',
   initialState: initialState,
@@ -48,9 +64,15 @@ export const ingredientsSlice = createSlice({
     builder.addCase(createIngredient.fulfilled, (state, action) => {
       state.ingredients.push(action.payload);
     });
+    builder.addCase(updateIngredient.fulfilled, (state, action) => {
+      const ingredientIndex = state.ingredients.findIndex((ingredient) => ingredient.id === action.payload.id);
+      state.ingredients[ingredientIndex] = action.payload;
+    });
   },
 });
 
 export const selectAllIngredients = (state: RootState) => state.ingredients.ingredients;
+export const selectIngredientById = (id: number) => (state: RootState) =>
+  state.ingredients.ingredients.find((ingredient) => ingredient.id === id);
 
 export default ingredientsSlice.reducer;

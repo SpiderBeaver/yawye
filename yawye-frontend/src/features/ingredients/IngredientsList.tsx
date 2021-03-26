@@ -2,7 +2,13 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchIngredients, selectAllIngredients } from './ingredientsSlice';
 
-export default function IngredientsList() {
+interface IngredientsListProps {
+  onEdit?: (id: number) => void;
+}
+
+export default function IngredientsList(props: IngredientsListProps) {
+  const { onEdit } = props;
+
   const dispatch = useDispatch();
 
   const ingredients = useSelector(selectAllIngredients);
@@ -14,7 +20,10 @@ export default function IngredientsList() {
   return (
     <ul>
       {ingredients.map((ingredient) => (
-        <li key={ingredient.id}>{ingredient.name}</li>
+        <li key={ingredient.id}>
+          <span>{ingredient.name}</span>
+          <button onClick={() => onEdit?.(ingredient.id)}>edit</button>
+        </li>
       ))}
     </ul>
   );
