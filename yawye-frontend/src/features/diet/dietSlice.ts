@@ -1,11 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import dayjs, { Dayjs } from 'dayjs';
+import apiClient from '../../api/apiClient';
 import { RootState } from '../../app/store';
-
-interface Serving {
-  dishId: number;
-  weight: number;
-}
+import Serving from '../../models/Serving';
 
 interface DietState {
   dailyDiet: {
@@ -22,10 +19,7 @@ const initialState: DietState = {
 };
 
 export const changeDate = createAsyncThunk('/diet/changeDate', async ({ newDate }: { newDate: Dayjs }) => {
-  // TODO Extract to a separate module for API client.
-  const newDateString = newDate.format('YYYY-MM-DD');
-  const response = await fetch(`http://192.168.1.7:3001/diet/${newDateString}`);
-  const servings = await response.json();
+  const servings = await apiClient.getDiet(newDate);
   return {
     newDate: newDate.unix(),
     servings: servings,
@@ -35,19 +29,7 @@ export const changeDate = createAsyncThunk('/diet/changeDate', async ({ newDate 
 export const addServing = createAsyncThunk(
   '/dist/addServing',
   async ({ date, dishId, weight }: { date: Dayjs; dishId: number; weight: number }) => {
-    const body = {
-      date,
-      dishId,
-      weight: Math.trunc(weight),
-    };
-    const response = await fetch('http://localhost:3001/diet/addServing', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    });
-    const serving = await response.json();
+    const serving = await apiClient.addServing(date, dishId, weight);
     return serving;
   }
 );

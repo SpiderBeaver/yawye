@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Dish, selectAllDishes } from '../dishes/dishesSlice';
+import { Dish } from '../../models/Dish';
+import { selectAllDishes } from '../dishes/dishesSlice';
 import styles from './AddServingForm.module.css';
 
 interface AddServingFormProps {

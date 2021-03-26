@@ -1,11 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import apiClient from '../../api/apiClient';
 import { RootState } from '../../app/store';
-
-interface Ingredient {
-  id: number;
-  name: string;
-  calories: number;
-}
+import Ingredient from '../../models/Ingredient';
 
 interface IngredientsState {
   ingredients: Ingredient[];
@@ -16,23 +12,14 @@ const initialState: IngredientsState = {
 };
 
 export const fetchIngredients = createAsyncThunk('ingredients/fetchIngredients', async () => {
-  const response = await fetch('http://192.168.1.7:3001/ingredients');
-  const ingredients = (await response.json()) as Ingredient[];
+  const ingredients = apiClient.getIngredients();
   return ingredients;
 });
 
 export const createIngredient = createAsyncThunk(
   'ingredients/createIngredient',
   async ({ name, calories }: { name: string; calories: number }) => {
-    const body = { name, calories };
-    const response = await fetch('http://localhost:3001/ingredients/add', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    });
-    const ingredient = (await response.json()) as Ingredient;
+    const ingredient = await apiClient.createIngredient(name, calories);
     return ingredient;
   }
 );
@@ -40,15 +27,7 @@ export const createIngredient = createAsyncThunk(
 export const updateIngredient = createAsyncThunk(
   'ingredients/updateIngredient',
   async ({ id, name, calories }: { id: number; name: string; calories: number }) => {
-    const body = { id, name, calories };
-    const response = await fetch('http://localhost:3001/ingredients/update', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    });
-    const ingredient = (await response.json()) as Ingredient;
+    const ingredient = await apiClient.updateIngredient(id, name, calories);
     return ingredient;
   }
 );
