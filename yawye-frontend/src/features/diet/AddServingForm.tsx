@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import styled from 'styled-components';
 import { Dish } from '../../models/Dish';
 import { selectAllDishes } from '../dishes/dishesSlice';
-import styles from './AddServingForm.module.css';
 
 interface AddServingFormProps {
   onBack?: () => void;
@@ -16,21 +16,41 @@ function dishServingWeight(dish: Dish) {
   return servingWeight;
 }
 
+const ServingForm = styled.div`
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #ffffff;
+`;
+
+const Heading = styled.h2`
+  margin: 0;
+`;
+
+const DishesList = styled.ul`
+  margin: 0;
+  padding: 0;
+`;
+
+const DishesListItem = styled.li`
+  list-style: none;
+`;
+
 export default function AddServingForm({ onBack, onAddDish }: AddServingFormProps) {
   const dishes = useSelector(selectAllDishes);
 
   return (
-    <div className={styles.servingForm}>
-      <h2 className={styles.heading}>Add Serving Form</h2>
+    <ServingForm>
+      <Heading>Add Serving Form</Heading>
       <button onClick={onBack}>back</button>
-      <ul className={styles.dishesList}>
+      <DishesList>
         {dishes.map((dish) => (
-          <li key={dish.id} className={styles.dishesListItem}>
+          <DishesListItem key={dish.id}>
             <span>{dish.name}</span>
             <button onClick={() => onAddDish?.(dish.id, dishServingWeight(dish))}>Add</button>
-          </li>
+          </DishesListItem>
         ))}
-      </ul>
-    </div>
+      </DishesList>
+    </ServingForm>
   );
 }

@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
-import styles from './NewIngredientForm.module.css';
+import styled from 'styled-components';
 
 interface NewIngredientFormProps {
   onBack?: () => void;
   onCreate?: (name: string, calories: number) => void;
 }
+
+const Form = styled.div`
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #ffffff;
+`;
 
 export default function NewIngredientForm({ onBack, onCreate }: NewIngredientFormProps) {
   const [name, setName] = useState('');
@@ -16,13 +23,13 @@ export default function NewIngredientForm({ onBack, onCreate }: NewIngredientFor
   };
 
   return (
-    <div className={styles.form}>
+    <Form>
       <button onClick={onBack}>back</button>
       <form onSubmit={handleSubmit}>
         <input type="text" value={name} onChange={(e) => setName(e.target.value)}></input>
         <input type="number" value={calories} onChange={(e) => setCalories(parseInt(e.target.value))}></input>
         <input type="submit" value="Create"></input>
       </form>
-    </div>
+    </Form>
   );
 }

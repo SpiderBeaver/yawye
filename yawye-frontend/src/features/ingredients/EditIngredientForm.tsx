@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styles from './EditIngredientForm.module.css';
+import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { selectIngredientById } from './ingredientsSlice';
 
@@ -8,6 +8,13 @@ interface EditIngredientFormProps {
   onBack?: () => void;
   onUpdate?: (id: number, name: string, calories: number) => void;
 }
+
+const Form = styled.div`
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #ffffff;
+`;
 
 export default function EditIngredientForm(props: EditIngredientFormProps) {
   const { ingredientId, onBack, onUpdate } = props;
@@ -28,13 +35,13 @@ export default function EditIngredientForm(props: EditIngredientFormProps) {
   };
 
   return (
-    <div className={styles.form}>
+    <Form>
       <button onClick={onBack}>back</button>
       <form onSubmit={handleSubmit}>
         <input type="text" value={name} onChange={(e) => setName(e.target.value)}></input>
         <input type="number" value={calories} onChange={(e) => setCalories(parseInt(e.target.value))}></input>
         <input type="submit" value="Save"></input>
       </form>
-    </div>
+    </Form>
   );
 }
