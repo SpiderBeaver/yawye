@@ -1,10 +1,21 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import styled from 'styled-components/macro';
 import EditIngredientForm from '../../features/ingredients/EditIngredientForm';
 import IngredientsList from '../../features/ingredients/IngredientsList';
 import { createIngredient, updateIngredient } from '../../features/ingredients/ingredientsSlice';
 import NewIngredientForm from '../../features/ingredients/NewIngredientForm';
+import ActionButton from '../components/ActionButton';
+import Page from '../components/Page';
+import PageHeader from '../components/PageHeader';
 import SlideIn from '../components/SlideIn';
+
+const IngredientsListContainer = styled.div`
+  background-color: #ffffff;
+  padding: 1rem;
+  border-radius: 1rem;
+  margin-top: 1rem;
+`;
 
 export default function IngredientsPage() {
   const dispatch = useDispatch();
@@ -31,10 +42,13 @@ export default function IngredientsPage() {
   };
 
   return (
-    <section>
-      <h2>Ingredients</h2>
-      <IngredientsList onEdit={handleEditIngredientButton}></IngredientsList>
-      <button onClick={() => setShowNewIngredientForm(true)}>New Ingredient</button>
+    <Page>
+      <PageHeader>Ingredients</PageHeader>
+      <ActionButton onClick={() => setShowNewIngredientForm(true)}>New Ingredient</ActionButton>
+      <IngredientsListContainer>
+        <IngredientsList onEdit={handleEditIngredientButton}></IngredientsList>
+      </IngredientsListContainer>
+
       <SlideIn show={showNewIngredientForm}>
         <NewIngredientForm
           onBack={() => setShowNewIngredientForm(false)}
@@ -50,6 +64,6 @@ export default function IngredientsPage() {
           ></EditIngredientForm>
         </SlideIn>
       )}
-    </section>
+    </Page>
   );
 }

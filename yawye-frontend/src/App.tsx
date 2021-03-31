@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import Navigation, { PageName } from './common/components/Navigation';
 import DietPage from './common/pages/DietPage';
 import DishesPage from './common/pages/DishesPage';
@@ -12,12 +12,14 @@ const AppElement = styled.div`
   position: relative;
   overflow: hidden;
   height: 100%;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto 3rem;
 `;
 
 const PageContainer = styled.div`
-  flex-grow: 1;
+  overflow: scroll;
+  background-color: #fafafa;
 `;
 
 const NavigationContainer = styled.div`

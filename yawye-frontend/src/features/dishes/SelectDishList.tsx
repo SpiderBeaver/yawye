@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { Dish } from '../../models/Dish';
 import { selectAllDishes } from './dishesSlice';
 
