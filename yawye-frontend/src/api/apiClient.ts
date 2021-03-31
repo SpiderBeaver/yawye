@@ -4,7 +4,7 @@ import Ingredient from '../models/Ingredient';
 import Serving from '../models/Serving';
 
 // TODO: Load from config/environment
-const baseUrl = 'http://localhost:3001';
+const baseUrl = 'http://192.168.1.7:3001';
 
 function fullUrl(relativeUrl: string) {
   return new URL(relativeUrl, baseUrl).href;
