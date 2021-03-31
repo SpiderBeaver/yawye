@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchIngredients, selectAllIngredients } from './ingredientsSlice';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { selectAllIngredients } from './ingredientsSlice';
 
 interface IngredientsListProps {
   onEdit?: (id: number) => void;
@@ -9,13 +9,7 @@ interface IngredientsListProps {
 export default function IngredientsList(props: IngredientsListProps) {
   const { onEdit } = props;
 
-  const dispatch = useDispatch();
-
   const ingredients = useSelector(selectAllIngredients);
-
-  useEffect(() => {
-    dispatch(fetchIngredients());
-  }, [dispatch]);
 
   return (
     <ul>

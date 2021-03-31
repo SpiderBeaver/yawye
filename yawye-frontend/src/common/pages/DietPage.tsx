@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import AddServingForm from '../../features/diet/AddServingForm';
 import DailyDiet from '../../features/diet/DailyDiet';
 import { addServing, changeDate } from '../../features/diet/dietSlice';
-import { fetchDishes } from '../../features/dishes/dishesSlice';
 import DateHeader from '../components/DateHeader';
 import SlideIn from '../components/SlideIn';
 
@@ -15,7 +14,6 @@ export default function DietPage() {
   const [showAddServingForm, setShowAddServingForm] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchDishes());
     dispatch(changeDate({ newDate: dayjs() }));
   }, [dispatch]);
 

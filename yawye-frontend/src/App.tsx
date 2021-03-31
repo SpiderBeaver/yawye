@@ -1,9 +1,28 @@
-import React, { useState } from 'react';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
 import Navigation, { PageName } from './common/components/Navigation';
 import DietPage from './common/pages/DietPage';
 import DishesPage from './common/pages/DishesPage';
 import IngredientsPage from './common/pages/IngredientsPage';
+import { fetchDishes } from './features/dishes/dishesSlice';
+import { fetchIngredients } from './features/ingredients/ingredientsSlice';
+
+const AppElement = styled.div`
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const PageContainer = styled.div`
+  flex-grow: 1;
+`;
+
+const NavigationContainer = styled.div`
+  height: 3rem;
+`;
 
 function pageElement(name: PageName) {
   switch (name) {
@@ -17,13 +36,22 @@ function pageElement(name: PageName) {
 }
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchDishes());
+    dispatch(fetchIngredients());
+  }, [dispatch]);
+
   const [currentPage, setCurrentPage] = useState<PageName>('diet');
 
   return (
-    <div className="App">
-      {pageElement(currentPage)}
-      <Navigation currentPage={currentPage} onPageChange={(page) => setCurrentPage(page)}></Navigation>
-    </div>
+    <AppElement>
+      <PageContainer>{pageElement(currentPage)}</PageContainer>
+      <NavigationContainer>
+        <Navigation currentPage={currentPage} onPageChange={(page) => setCurrentPage(page)}></Navigation>
+      </NavigationContainer>
+    </AppElement>
   );
 }
 

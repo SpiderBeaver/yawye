@@ -1,5 +1,4 @@
 import { Dayjs } from 'dayjs';
-import { addServing } from '../features/diet/dietSlice';
 import { Dish } from '../models/Dish';
 import Ingredient from '../models/Ingredient';
 import Serving from '../models/Serving';

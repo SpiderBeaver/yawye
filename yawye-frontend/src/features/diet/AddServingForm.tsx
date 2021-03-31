@@ -1,8 +1,7 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Dish } from '../../models/Dish';
-import { selectAllDishes } from '../dishes/dishesSlice';
+import SelectDishList from '../dishes/SelectDishList';
 
 interface AddServingFormProps {
   onBack?: () => void;
@@ -27,30 +26,16 @@ const Heading = styled.h2`
   margin: 0;
 `;
 
-const DishesList = styled.ul`
-  margin: 0;
-  padding: 0;
-`;
-
-const DishesListItem = styled.li`
-  list-style: none;
-`;
-
 export default function AddServingForm({ onBack, onAddDish }: AddServingFormProps) {
-  const dishes = useSelector(selectAllDishes);
+  const handleSelectDish = (dish: Dish) => {
+    onAddDish?.(dish.id, dishServingWeight(dish));
+  };
 
   return (
     <ServingForm>
       <Heading>Add Serving Form</Heading>
       <button onClick={onBack}>back</button>
-      <DishesList>
-        {dishes.map((dish) => (
-          <DishesListItem key={dish.id}>
-            <span>{dish.name}</span>
-            <button onClick={() => onAddDish?.(dish.id, dishServingWeight(dish))}>Add</button>
-          </DishesListItem>
-        ))}
-      </DishesList>
+      <SelectDishList onSelect={handleSelectDish}></SelectDishList>
     </ServingForm>
   );
 }
