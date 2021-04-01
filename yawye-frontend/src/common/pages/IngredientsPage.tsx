@@ -6,6 +6,7 @@ import IngredientsList from '../../features/ingredients/IngredientsList';
 import { createIngredient, updateIngredient } from '../../features/ingredients/ingredientsSlice';
 import NewIngredientForm from '../../features/ingredients/NewIngredientForm';
 import ActionButton from '../components/ActionButton';
+import Dialog from '../components/Dialog';
 import Page from '../components/Page';
 import PageHeader from '../components/PageHeader';
 import SlideIn from '../components/SlideIn';
@@ -26,11 +27,6 @@ export default function IngredientsPage() {
 
   const [editedIngredientId, setEditedIngredientId] = useState<number | null>(null);
 
-  const handleCreateIngredient = (name: string, calories: number) => {
-    dispatch(createIngredient({ name: name, calories: calories }));
-    setShowNewIngredientForm(false);
-  };
-
   const handleEditIngredientButton = (id: number) => {
     setEditedIngredientId(id);
     setShowEditIngredientForm(true);
@@ -49,12 +45,6 @@ export default function IngredientsPage() {
         <IngredientsList onEdit={handleEditIngredientButton}></IngredientsList>
       </IngredientsListContainer>
 
-      <SlideIn show={showNewIngredientForm}>
-        <NewIngredientForm
-          onBack={() => setShowNewIngredientForm(false)}
-          onCreate={handleCreateIngredient}
-        ></NewIngredientForm>
-      </SlideIn>
       {editedIngredientId === null ? null : (
         <SlideIn show={showEditIngredientForm}>
           <EditIngredientForm
@@ -64,6 +54,13 @@ export default function IngredientsPage() {
           ></EditIngredientForm>
         </SlideIn>
       )}
+
+      <Dialog show={showNewIngredientForm} onClose={() => setShowNewIngredientForm(false)}>
+        <NewIngredientForm
+          onBack={() => setShowNewIngredientForm(false)}
+          onCreated={() => setShowNewIngredientForm(false)}
+        ></NewIngredientForm>
+      </Dialog>
     </Page>
   );
 }

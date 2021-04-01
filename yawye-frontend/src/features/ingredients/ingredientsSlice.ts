@@ -5,10 +5,12 @@ import Ingredient from '../../models/Ingredient';
 
 interface IngredientsState {
   ingredients: Ingredient[];
+  loadingState: 'idle' | 'pending' | 'success';
 }
 
 const initialState: IngredientsState = {
   ingredients: [],
+  loadingState: 'idle',
 };
 
 export const fetchIngredients = createAsyncThunk('ingredients/fetchIngredients', async () => {
@@ -35,12 +37,20 @@ export const updateIngredient = createAsyncThunk(
 export const ingredientsSlice = createSlice({
   name: 'ingredients',
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    loadingStateReset: (state, action) => {
+      state.loadingState = 'idle';
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchIngredients.fulfilled, (state, action) => {
       state.ingredients = action.payload;
     });
+    builder.addCase(createIngredient.pending, (state, action) => {
+      state.loadingState = 'pending';
+    });
     builder.addCase(createIngredient.fulfilled, (state, action) => {
+      state.loadingState = 'success';
       state.ingredients.push(action.payload);
     });
     builder.addCase(updateIngredient.fulfilled, (state, action) => {
@@ -53,5 +63,8 @@ export const ingredientsSlice = createSlice({
 export const selectAllIngredients = (state: RootState) => state.ingredients.ingredients;
 export const selectIngredientById = (id: number) => (state: RootState) =>
   state.ingredients.ingredients.find((ingredient) => ingredient.id === id);
+export const selectLoadingState = (state: RootState) => state.ingredients.loadingState;
+
+export const { loadingStateReset } = ingredientsSlice.actions;
 
 export default ingredientsSlice.reducer;
