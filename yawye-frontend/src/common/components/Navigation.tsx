@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 export type PageName = 'diet' | 'dishes' | 'ingredients';
 
 const NavigationElement = styled.div`
-  background-color: #3e3e3e;
+  background-color: ${(props) => props.theme.colors.backgroundDark};
   height: 100%;
   display: flex;
 `;
@@ -21,7 +21,7 @@ const NavigationButton = styled.button<{ selected: boolean }>`
   ${({ selected }) =>
     selected &&
     css`
-      color: green;
+      color: ${(props) => props.theme.colors.accent};
     `}
 `;
 

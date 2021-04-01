@@ -2,7 +2,7 @@ import styled from 'styled-components/macro';
 
 export default styled.button`
   border: none;
-  background-color: #00ad07;
+  background-color: ${(props) => props.theme.colors.accent};
   color: #ffffff;
   font-size: 1.2rem;
   font-family: inherit;

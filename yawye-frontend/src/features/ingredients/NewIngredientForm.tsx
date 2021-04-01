@@ -11,7 +11,7 @@ interface NewIngredientFormProps {
 const FormContainer = styled.div`
   margin: 1rem;
   padding: 1rem;
-  background-color: #d274ff;
+  background-color: ${(props) => props.theme.colors.backgroundAccent};
   border-radius: 1rem;
 `;
 
@@ -55,7 +55,7 @@ const LabelSmall = styled.label`
 
 const Input = styled.input`
   padding: 0.3rem;
-  border: 1px solid #a429b8;
+  border: none;
   border-radius: 0.2rem;
   font-size: 1rem;
 `;
@@ -64,7 +64,7 @@ const Submit = styled.input`
   margin-top: 1rem;
   align-self: end;
   border: none;
-  background-color: #00ad07;
+  background-color: ${(props) => props.theme.colors.accent};
   color: #ffffff;
   font-size: 1.2rem;
   font-family: inherit;
