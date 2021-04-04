@@ -11,7 +11,7 @@ const IngredientsListStyled = styled.ul`
 
 const IngredientListItem = styled.li`
   list-style: none;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 `;
 
 const Ingredient = styled.div`
